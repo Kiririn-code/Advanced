@@ -1,0 +1,65 @@
+﻿@page "/pages"
+@model IndexModel
+
+<h4 class="bg-primary texrt-white text-center p-2">People</h4>
+
+<table class="table table-bordered teble-striped table-sm">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Dept</th>
+            <th>Location</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var person in Model.People)
+        {
+            <tr class="@Model.GetClass(person.Location.City)">
+                <td>@person.PersonId</td>
+                <td>@person.Firstname , @person.Surname</td>
+                <td>@person.Departament.Name</td>
+                <td>@person.Location.City, @person.Location.State</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<form asp-page="Index" method="get">
+    <div class="form-group">
+        <label for="selectedCity">City</label>
+        <select name="selectedCity" class="form-control">
+            <option disabled selected>Select City</option>
+            @foreach (var city in Model.Cities)
+            {
+                <option selected="@(city==Model.SelectedCity)">@city</option>
+            }
+        </select>
+    </div>
+    <button class="btn btn-primary" type="submit">Select</button>
+</form>
+
+@functions{
+    public class IndexModel : PageModel
+    {
+        private DataContext context;
+        public IndexModel(DataContext ctx)
+        {
+            context = ctx;
+        }
+
+        public IEnumerable<Person> People { get; set; }
+        public IEnumerable<string> Cities { get; set; }
+        [FromQuery]
+        public string SelectedCity { get; set; }
+
+        public void OnGet()
+        {
+            People = context.People.Include(p => p.Departament).Include(p => p.Location);
+            Cities = context.Locations.Select(l => l.City).Distinct();
+        }
+
+        public string GetClass(string city) =>
+            SelectedCity == city ? "bg-info text-white" : "";
+    }
+}
