@@ -2,38 +2,4 @@
 
 <h4 class="bg-primary texrt-white text-center p-2">People</h4>
 
-<table class="table table-bordered teble-striped table-sm">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Dept</th>
-            <th>Location</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var person in Model.People)
-            {
-                <tr class="@Model.GetClass(person.Location.City)">
-                    <td>@person.PersonId</td>
-                    <td>@person.Firstname , @person.Surname</td>
-                    <td>@person.Departament.Name</td>
-                    <td>@person.Location.City, @person.Location.State</td>
-                </tr>
-            }
-    </tbody>
-</table>
-
-<form asp-action="Index" method="get">
-    <div class="form-group">
-        <label for="selectedCity">City</label>
-        <select name="selectedCity" class="form-control">
-            <option disabled selected>Select City</option>
-            @foreach (var city in Model.Cities)
-                {
-                    <option selected="@(city==Model.SelectedCity)">@city</option>
-                }
-        </select>
-    </div>
-    <button class="btn btn-primary" type="submit">Select</button>
-</form>
+<component type="typeof(Advanced.Blazor.PeopleList)" render-mode="Server" />

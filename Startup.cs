@@ -30,6 +30,7 @@ namespace Advanced
             });
             services.AddRazorPages().AddRazorRuntimeCompilation();
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
+            services.AddServerSideBlazor();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env,DataContext context)
@@ -47,6 +48,7 @@ namespace Advanced
                     endpoints.MapControllerRoute("controllers", "/controllers/{controller=Home}/{action=Index}/{id?}");
                     endpoints.MapDefaultControllerRoute();
                     endpoints.MapRazorPages();
+                endpoints.MapBlazorHub();
             });
             SeedData.SeedDatabase(context);
         }

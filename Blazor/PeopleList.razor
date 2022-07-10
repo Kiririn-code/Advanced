@@ -1,0 +1,44 @@
+﻿<table class="table table-bordered table-striped table-sm">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Deptn</th>
+            <th>Location</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in People)
+            {
+                <tr class="@GetClass(item.Location.City)">
+                    <td>@item.PersonId</td>
+                    <td>@item.Firstname, @item.Surname</td>
+                    <td>@item.Departament.Name</td>
+                    <td>@item.Location.City, @item.Location.State</td>
+                </tr>
+            }
+    </tbody>
+</table>
+
+<div class="form-group">
+    <label for="city">City</label>
+    <select name="City" class="form-control" @bind="SelectedCity">
+        <option disabled selected>Select City</option>
+        @foreach (var city in Cities)
+            {
+                <option value="@city" selected="@(city == SelectedCity)">@city</option>
+            }
+    </select>
+</div>
+
+@code{
+    [Inject]
+    public DataContext Context { get; set; }
+    public IEnumerable<Person> People =>
+        Context.People.Include(p => p.Departament).Include(p => p.Location);
+    public IEnumerable<string> Cities => Context.Locations.Select(p => p.City);
+    public string SelectedCity { get; set; }
+
+    public string GetClass(string city) =>
+        SelectedCity == city ? "bg-info text-white" : "";
+}
