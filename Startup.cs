@@ -24,10 +24,8 @@ namespace Advanced
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<DataContext>(opts =>
-            {
-                opts.UseSqlServer(Configuration["ConnectionStrings:PeopleConnection"]);
-                opts.EnableSensitiveDataLogging(true);
-            });
+                opts.UseNpgsql(Configuration.GetConnectionString("PeopleConnectionPSQL")));
+
             services.AddRazorPages().AddRazorRuntimeCompilation();
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddServerSideBlazor();

@@ -60,7 +60,14 @@ using Advanced.Models;
 #line default
 #line hidden
 #nullable disable
-    public partial class PeopleList : Microsoft.AspNetCore.Components.ComponentBase
+#nullable restore
+#line 1 "/Users/admin/Desktop/project/WEB/Advanced/Blazor/Bindings.razor"
+using System.Globalization;
+
+#line default
+#line hidden
+#nullable disable
+    public partial class Bindings : Microsoft.AspNetCore.Components.ComponentBase
     {
         #pragma warning disable 1998
         protected override void BuildRenderTree(Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder __builder)
@@ -68,21 +75,11 @@ using Advanced.Models;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 25 "/Users/admin/Desktop/project/WEB/Advanced/Blazor/PeopleList.razor"
+#line 28 "/Users/admin/Desktop/project/WEB/Advanced/Blazor/Bindings.razor"
       
-    [Inject]
-    public DataContext Context { get; set; }
-    public IEnumerable<Person> People =>
-        Context.People.Include(p => p.Departament).Include(p => p.Location).Take(ItemCount);
-    public IEnumerable<string> Cities => Context.Locations.Select(p => p.City);
-    public string SelectedCity { get; set; }
-
-    public string GetClass(string city) =>
-        SelectedCity == city ? "bg-info text-white" : "";
-        [Parameter]
-    public int ItemCount { get; set; }
-        [Parameter]
-    public string SelectTitle { get; set; }
+    public string City { get; set; } = "London";
+    public DateTime Time { get; set; } = DateTime.Parse("2050/01/20 09:50");
+    public CultureInfo Culture { get; set; } = CultureInfo.GetCultureInfo("en-us");
 
 #line default
 #line hidden

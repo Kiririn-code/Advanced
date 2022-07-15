@@ -60,7 +60,7 @@ using Advanced.Models;
 #line default
 #line hidden
 #nullable disable
-    public partial class PeopleList : Microsoft.AspNetCore.Components.ComponentBase
+    public partial class SelectFilter : Microsoft.AspNetCore.Components.ComponentBase
     {
         #pragma warning disable 1998
         protected override void BuildRenderTree(Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder __builder)
@@ -68,21 +68,15 @@ using Advanced.Models;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 25 "/Users/admin/Desktop/project/WEB/Advanced/Blazor/PeopleList.razor"
+#line 14 "/Users/admin/Desktop/project/WEB/Advanced/Blazor/SelectFilter.razor"
       
-    [Inject]
-    public DataContext Context { get; set; }
-    public IEnumerable<Person> People =>
-        Context.People.Include(p => p.Departament).Include(p => p.Location).Take(ItemCount);
-    public IEnumerable<string> Cities => Context.Locations.Select(p => p.City);
-    public string SelectedCity { get; set; }
-
-    public string GetClass(string city) =>
-        SelectedCity == city ? "bg-info text-white" : "";
-        [Parameter]
-    public int ItemCount { get; set; }
-        [Parameter]
-    public string SelectTitle { get; set; }
+    [Parameter]
+    public IEnumerable<string> Values { get; set; } = Enumerable.Empty<string>();
+    public string SelectedValue { get; set; }
+    [Parameter]
+    public string Title { get; set; } = "Placeholder";
+    [Parameter(CaptureUnmatchedValues = true)]
+    public Dictionary<string,object> Attrs { get; set; }
 
 #line default
 #line hidden
